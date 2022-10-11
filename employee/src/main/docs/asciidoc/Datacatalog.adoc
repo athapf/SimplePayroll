@@ -1,0 +1,8 @@
+= Datenbeschreibung
+
+[role="datacatalog"]
+== Datenkatalog
+
+Mitarbeiter verwalten
+
+include::entities/_Employee.adoc[leveloffset=0]

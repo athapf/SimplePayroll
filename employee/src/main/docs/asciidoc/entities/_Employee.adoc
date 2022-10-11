@@ -1,0 +1,48 @@
+
+=== Entity [entity]#Employee#
+
+Number:: [type]#String# [sql]#varchar(12)# [key]
+
+  Mitarbeiternummer
+  Wird ein einziges mal vergeben
+  Ist eineindeutig
+
+
+SureName:: [type]#String# [sql]#varchar(50)#
+
+  Nachname des Mitarbeiters
+
+
+FirstName:: [type]#String# [sql]#varchar(50)#
+
+  Vorname des Mitarbeiters
+
+
+Street:: [type]#String# [sql]#varchar(50)#
+
+  Adresse des Mitarbeiters
+
+
+PLZ:: [type]#String# [sql]#varchar(50)#
+
+  Postleitzahl des Mitarbeiters
+
+
+City:: [type]#String# [sql]#varchar(50)#
+
+  Wohnort des Mitarbeiters
+
+
+IBAN:: [type]#String# [sql]#varchar(50)#
+
+  Konto für Lohnüberweisung
+
+
+WeeklyHours:: [type]#BigDecimal# [sql]#decimal(2,2)#
+
+  Wochenstunden
+
+
+WageRate:: [type]#BigDecimal# [sql]#decimal(5,4)#
+
+  Stundenlohn
