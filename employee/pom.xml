@@ -88,6 +88,24 @@
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/xml</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
                 <artifactId>xml-maven-plugin</artifactId>
                 <version>1.0.2</version>
                 <executions>
@@ -104,8 +122,7 @@
                         <transformationSet>
                             <dir>src/main/xml/datacatalog</dir>
                             <stylesheet>src/main/stylesheet/generate/entity.xsl</stylesheet>
-                            <!--<outputDir>${project.build.directory}/generated-sources/classes/de/thaso/demo/examples/simplepayroll/employee/entity2</outputDir>-->
-                            <outputDir>src/main/java/de/thaso/demo/examples/simplepayroll/employee/entity</outputDir>
+                            <outputDir>${project.build.directory}/generated-sources/xml/de/thaso/demo/examples/simplepayroll/employee/entity</outputDir>
                             <fileMappers>
                                 <fileMapper
                                         implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper">
