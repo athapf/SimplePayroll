@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<komponent name="Worktime">
+
+    <resources path="operativ/leistung/payroll">
+        <resource name="Worktimes"
+                  path="worktimes"
+                  entity="Worktime"
+                  controller="WorktimeController">
+            <method type="GET" name="findWorktimeOfEmployee" result="list"/>
+            <method type="POST" name="createWorktime"/>
+            <method type="GET" name="findWorktime" result="single">
+                <path-parameter name="id" java-type="String"/>
+            </method>
+        </resource>
+    </resources>
+
+    <topics>
+        <consumer topic="values" entity="Worktime" controller="WorktimeController"/>
+    </topics>
+
+    <database>
+        <dao target="cassandra" entity="Worktime">
+            <update/>
+            <select/>
+            <store/>
+        </dao>
+    </database>
+
+    <datacatalog>
+        <entity name="Employee">
+            <field name="Number" type="String" key="true"/>
+            <field name="SureName" type="String"/>
+            <field name="FirstName" type="String"/>
+            <field name="WeeklyHours" type="BigDecimal"/>
+        </entity>
+        <entity name="Worktime">
+            <field name="id" type="String" key="true"/>
+            <field name="Number" type="String"/>
+            <field name="Date" type="Date"/>
+        </entity>
+    </datacatalog>
+</komponent>

@@ -120,20 +120,37 @@
                 <configuration>
                     <transformationSets>
                         <transformationSet>
-                            <dir>src/main/xml/datacatalog</dir>
-                            <stylesheet>src/main/stylesheet/generate/entity.xsl</stylesheet>
-                            <outputDir>${project.build.directory}/generated-sources/xml/de/thaso/demo/examples/simplepayroll/employee/entity</outputDir>
+                            <dir>src/main/xml</dir>
+                            <stylesheet>src/main/stylesheet/generate/generate-code.xslt</stylesheet>
+                            <parameters>
+                                <parameter>
+                                    <name>OutputBaseDirectory</name>
+                                    <value>${project.build.directory}/generated-sources/xml</value>
+                                </parameter>
+                                <parameter>
+                                    <name>PackagePath</name>
+                                    <value>de/thaso/demo/examples/simplepayroll</value>
+                                </parameter>
+                            </parameters>
+                            <outputDir>${project.build.directory}/generated-sources/xml</outputDir>
                             <fileMappers>
                                 <fileMapper
                                         implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper">
                                     <pattern>^(.*)\.xml$</pattern>
-                                    <replacement>$1.java</replacement>
+                                    <replacement>$1.info</replacement>
                                 </fileMapper>
                             </fileMappers>
                         </transformationSet>
                     </transformationSets>
                 </configuration>
-            </plugin>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.sf.saxon</groupId>
+                        <artifactId>saxon</artifactId>
+                        <version>8.7</version>
+                    </dependency>
+                </dependencies>
+          </plugin>
         </plugins>
     </build>
 </project>
