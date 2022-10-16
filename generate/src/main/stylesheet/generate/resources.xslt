@@ -94,7 +94,9 @@
             <xsl:text>&#xA;</xsl:text>
             <xsl:text>import </xsl:text>
             <xsl:value-of select="$package"/>
-            <xsl:text>.controller.EmployeeController;&#xA;</xsl:text>
+            <xsl:text>.controller.</xsl:text>
+            <xsl:value-of select="./@controller"/>
+            <xsl:text>;&#xA;</xsl:text>
             <xsl:text>import </xsl:text>
             <xsl:value-of select="$package"/>
             <xsl:text>.entity.</xsl:text>

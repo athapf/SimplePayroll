@@ -45,6 +45,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
             <groupId>com.datastax.oss.quarkus</groupId>
             <artifactId>cassandra-quarkus-client</artifactId>
@@ -56,10 +57,6 @@
         <dependency>
             <groupId>com.datastax.oss</groupId>
             <artifactId>java-driver-mapper-runtime</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
         </dependency>
 
         <dependency>
@@ -87,70 +84,17 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>${project.build.directory}/generated-sources/xml</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>xml-maven-plugin</artifactId>
-                <version>1.0.2</version>
-                <executions>
-                    <execution>
-                        <id>generate-entities</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>transform</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <transformationSets>
-                        <transformationSet>
-                            <dir>src/main/xml</dir>
-                            <stylesheet>src/main/stylesheet/generate/generate-code.xslt</stylesheet>
-                            <parameters>
-                                <parameter>
-                                    <name>OutputBaseDirectory</name>
-                                    <value>${project.build.directory}/generated-sources/xml</value>
-                                </parameter>
-                                <parameter>
-                                    <name>PackagePath</name>
-                                    <value>de/thaso/demo/examples/simplepayroll</value>
-                                </parameter>
-                            </parameters>
-                            <outputDir>${project.build.directory}/generated-sources/xml</outputDir>
-                            <fileMappers>
-                                <fileMapper
-                                        implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper">
-                                    <pattern>^(.*)\.xml$</pattern>
-                                    <replacement>$1.info</replacement>
-                                </fileMapper>
-                            </fileMappers>
-                        </transformationSet>
-                    </transformationSets>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>net.sf.saxon</groupId>
-                        <artifactId>saxon</artifactId>
-                        <version>8.7</version>
-                    </dependency>
-                </dependencies>
-          </plugin>
+            </plugin>
         </plugins>
     </build>
 </project>

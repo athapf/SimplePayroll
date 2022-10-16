@@ -52,6 +52,103 @@
     </dependencyManagement>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <executions>
+                        <execution>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>add-source</goal>
+                            </goals>
+                            <configuration>
+                                <sources>
+                                    <source>${project.build.directory}/generated-sources/xml</source>
+                                </sources>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.3.0</version>
+                    <executions>
+                        <execution>
+                            <id>unpack</id>
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>unpack</goal>
+                            </goals>
+                            <configuration>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>de.thaso.example.simple-payroll</groupId>
+                                        <artifactId>generate</artifactId>
+                                        <version>1.0.0-SNAPSHOT</version>
+                                        <classifier>stylesheets</classifier>
+                                        <type>zip</type>
+                                    </artifactItem>
+                                </artifactItems>
+                                <overWriteSnapshots>true</overWriteSnapshots>
+                                <outputDirectory>${project.build.directory}</outputDirectory>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>xml-maven-plugin</artifactId>
+                    <version>1.0.2</version>
+                    <executions>
+                        <execution>
+                            <id>generate-entities</id>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>transform</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <transformationSets>
+                            <transformationSet>
+                                <dir>src/main/xml</dir>
+                                <stylesheet>${project.build.directory}/stylesheet/generate/generate-code.xslt</stylesheet>
+                                <parameters>
+                                    <parameter>
+                                        <name>OutputBaseDirectory</name>
+                                        <value>${project.build.directory}/generated-sources/xml</value>
+                                    </parameter>
+                                    <parameter>
+                                        <name>PackagePath</name>
+                                        <value>de/thaso/demo/examples/simplepayroll</value>
+                                    </parameter>
+                                </parameters>
+                                <outputDir>${project.build.directory}/generated-sources/xml</outputDir>
+                                <fileMappers>
+                                    <fileMapper
+                                            implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper">
+                                        <pattern>^(.*)\.xml$</pattern>
+                                        <replacement>$1.info</replacement>
+                                    </fileMapper>
+                                </fileMappers>
+                            </transformationSet>
+                        </transformationSets>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>net.sf.saxon</groupId>
+                            <artifactId>saxon</artifactId>
+                            <version>8.7</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -96,7 +193,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <sourceDirectory>src/main/docs/asciidoc</sourceDirectory>
+                    <sourceDirectory>generate/src/main/docs/asciidoc</sourceDirectory>
                     <requires>
                         <require>asciidoctor-diagram</require>
                     </requires>
@@ -175,7 +272,7 @@
                     <highlightSource>1</highlightSource>
                     <paperType>A4</paperType>
                     <fop1Extensions>1</fop1Extensions>
-                    <foCustomization>src/main/docs/stylesheets/docbook.xsl</foCustomization>
+                    <foCustomization>generate/src/main/docs/stylesheets/docbook.xsl</foCustomization>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -215,6 +312,7 @@
     </build>
 
     <modules>
+        <module>generate</module>
         <module>employee</module>
         <module>worktime</module>
     </modules>

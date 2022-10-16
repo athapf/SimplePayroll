@@ -92,6 +92,7 @@
             <xsl:text>import com.datastax.oss.driver.api.mapper.annotations.PartitionKey;&#xA;</xsl:text>
             <xsl:text>import com.datastax.oss.driver.api.mapper.annotations.PropertyStrategy;&#xA;</xsl:text>
             <xsl:text>import java.math.BigDecimal;&#xA;</xsl:text>
+            <xsl:text>import java.util.Date;&#xA;</xsl:text>
             <xsl:text>&#xA;</xsl:text>
             <xsl:text>@Entity&#xA;</xsl:text>
             <xsl:text>public class </xsl:text>

@@ -7,11 +7,7 @@
                   path="worktimes"
                   entity="Worktime"
                   controller="WorktimeController">
-            <method type="GET" name="findWorktimeOfEmployee" result="list"/>
-            <method type="POST" name="createWorktime"/>
-            <method type="GET" name="findWorktime" result="single">
-                <path-parameter name="id" java-type="String"/>
-            </method>
+            <method type="GET" path="/reset" name="doReset"/>
         </resource>
     </resources>
 
