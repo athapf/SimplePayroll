@@ -7,6 +7,7 @@
     <xsl:import href="topics/topics.xslt"/>
     <xsl:import href="entity.xslt"/>
     <xsl:import href="cassandra/cassandra.xslt"/>
+    <xsl:import href="cassandra/initdb.xslt"/>
 
     <xsl:template match="komponent">
         <xsl:apply-templates select="./resources"/>
@@ -14,5 +15,6 @@
         <xsl:apply-templates select="./resources/resource" mode="controller"/>
         <xsl:apply-templates select="./datacatalog/entity"/>
         <xsl:apply-templates select="./database"/>
+        <xsl:apply-templates select="./datacatalog" mode="cassandra"/>
     </xsl:template>
 </xsl:stylesheet>

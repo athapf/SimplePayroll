@@ -1,4 +1,4 @@
-version: '3.5'
+version: '3.9'
 
 services:
   zookeeper:
@@ -9,6 +9,7 @@ services:
     ]
     ports:
       - "2181:2181"
+    restart: always
     environment:
       LOG_DIR: /tmp/logs
     networks:
@@ -24,6 +25,7 @@ services:
       - zookeeper
     ports:
       - "9092:9092"
+    restart: always
     environment:
       LOG_DIR: "/tmp/logs"
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
@@ -34,6 +36,24 @@ services:
     networks:
       - fundamental-network
 
+  database:
+#    image: bitnami/cassandra:latest
+    image: cassandra:4
+    ports:
+      - "9042:9042"
+    restart: always
+    environment:
+#      - CASSANDRA_HOST=database
+      - CASSANDRA_DATACENTER=datacenter1
+#      - CASSANDRA_SEEDS=database
+#      - CASSANDRA_PASSWORD_SEEDER=yes
+#      - CASSANDRA_PASSWORD=cassandra
+#      - CASSANDRA_USER=cassandra
+    volumes:
+      - ./cassandra:/docker-entrypoint-initdb.d
+    networks:
+      - fundamental-network
+
   employee:
     image: thaso-example/employee:1.0
     build:
@@ -41,8 +61,10 @@ services:
       dockerfile: src/main/docker/Dockerfile.jvm
     depends_on:
       - kafka
+      - database
     ports:
       - "8081:8080"
+    restart: always
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     networks:
@@ -54,9 +76,11 @@ services:
       context: worktime
       dockerfile: src/main/docker/Dockerfile.jvm
     depends_on:
-      - employee
+      - kafka
+      - database
     ports:
       - "8082:8080"
+    restart: always
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     networks:

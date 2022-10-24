@@ -58,6 +58,22 @@
             <groupId>com.datastax.oss</groupId>
             <artifactId>java-driver-mapper-runtime</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-liquibase</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.datastax.jdbc</groupId>
+            <artifactId>CassandraJDBC42</artifactId>
+            <version>4.2</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/lib/CassandraJDBC42.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase.ext</groupId>
+            <artifactId>liquibase-cassandra</artifactId>
+            <version>4.16.1</version>
+        </dependency>
 
         <dependency>
             <groupId>io.quarkus</groupId>

@@ -68,6 +68,10 @@
         </xsl:if>
         <xsl:apply-templates select="./path-parameter" mode="param"/>
         <xsl:text>) {&#xA;</xsl:text>
+        <xsl:text>        LOGGER.info("</xsl:text>
+        <xsl:value-of select="./@name"/>
+        <xsl:text> ...");&#xA;</xsl:text>
+        <xsl:text>&#xA;</xsl:text>
         <xsl:text>        </xsl:text>
         <xsl:if test="./@result = 'list' or ./@result = 'single'">return </xsl:if>
         <xsl:text>controller.</xsl:text>
@@ -114,6 +118,7 @@
             <xsl:text>import javax.ws.rs.Produces;&#xA;</xsl:text>
             <xsl:text>import javax.ws.rs.core.MediaType;&#xA;</xsl:text>
             <xsl:text>import java.util.List;&#xA;</xsl:text>
+            <xsl:text>import org.jboss.logging.Logger;&#xA;</xsl:text>
             <xsl:text>&#xA;</xsl:text>
             <xsl:text>@Path("/</xsl:text>
             <xsl:value-of select="./@path"/>
@@ -124,6 +129,10 @@
             <xsl:text>public class </xsl:text>
             <xsl:value-of select="./@name"/>
             <xsl:text>Resources {&#xA;</xsl:text>
+            <xsl:text>&#xA;</xsl:text>
+            <xsl:text>private static final Logger LOGGER = Logger.getLogger("</xsl:text>
+            <xsl:value-of select="./@name"/>
+            <xsl:text>Resources");&#xA;</xsl:text>
             <xsl:text>&#xA;</xsl:text>
             <xsl:text>    @Inject&#xA;</xsl:text>
             <xsl:text>    private </xsl:text>
