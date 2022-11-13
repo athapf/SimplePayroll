@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<komponent name="Monthvalue" package="monthvalue">
+
+    <resources path="monthvalue">
+        <resource name="Monthvalue"
+                  path=""
+                  service="MonthvalueService">
+            <dto name="Monthvalue" entity="Monthvalue"/>
+            <method type="GET"
+                    name="findAllMonthvalue"
+                    result="list"
+                    dto="Monthvalue"/>
+        </resource>
+    </resources>
+
+    <topics>
+        <consumer name="consumeWorktime"
+                  topic="worktime"
+                  service="MonthvalueService"
+                  key="String">
+            <dto name="Worktime" entity="Worktime"/>
+        </consumer>
+        <producer name="send"
+                  topic="monthvalue"
+                  entity="Monthvalue"
+                  object="record"
+                  key="String">
+            <dto name="Monthvalue" entity="Monthvalue"/>
+        </producer>
+    </topics>
+
+    <database kespace="monthvalue">
+        <dao name="Worktime" target="cassandra">
+            <crud entity="Worktime"/>
+            <entity name="Worktime" data="Worktime"/>
+        </dao>
+        <dao name="Monthvalue" target="cassandra">
+            <crud entity="Monthvalue"/>
+            <entity name="Monthvalue" data="Monthvalue"/>
+        </dao>
+    </database>
+
+    <datacatalog>
+        <entity name="Worktime">
+            <field name="Number" type="String" key="true"/>
+            <field name="Hour" type="BigDecimal"/>
+            <field name="Date" type="Date"/>
+            <field name="Createdon" type="Date"/>
+        </entity>
+        <entity name="Monthvalue">
+            <field name="Number" type="String" key="true"/>
+            <field name="Hour" type="BigDecimal"/>
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="Createdon" type="Date"/>
+        </entity>
+    </datacatalog>
+</komponent>
