@@ -13,7 +13,7 @@ services:
     environment:
       LOG_DIR: /tmp/logs
     networks:
-      - template-network
+      - payroll-network
 
   kafka:
     image: strimzi/kafka:0.19.0-kafka-2.5.0

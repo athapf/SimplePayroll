@@ -11,6 +11,10 @@
     <artifactId>worktime</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
+    <properties>
+        <generate-excludes>all</generate-excludes>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>io.quarkus</groupId>

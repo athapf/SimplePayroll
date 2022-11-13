@@ -56,7 +56,7 @@
         </entity>
         <entity name="Worktime">
             <field name="Number" type="String" key="true"/>
-            <field name="Houre" type="BigDecimal"/>
+            <field name="Hour" type="BigDecimal"/>
             <field name="Date" type="Date"/>
             <field name="Createdon" type="Date"/>
         </entity>
