@@ -13,7 +13,7 @@ services:
     environment:
       LOG_DIR: /tmp/logs
     networks:
-      - fundamental-network
+      - template-network
 
   kafka:
     image: strimzi/kafka:0.19.0-kafka-2.5.0
@@ -34,25 +34,7 @@ services:
       KAFKA_NUM_PARTITIONS: 3
       KAFKA_GROUP_MIN_SESSION_TIMEOUT_MS: 100
     networks:
-      - fundamental-network
-
-  database:
-#    image: bitnami/cassandra:latest
-    image: cassandra:4
-    ports:
-      - "9042:9042"
-    restart: always
-    environment:
-#      - CASSANDRA_HOST=database
-      - CASSANDRA_DATACENTER=datacenter1
-#      - CASSANDRA_SEEDS=database
-#      - CASSANDRA_PASSWORD_SEEDER=yes
-#      - CASSANDRA_PASSWORD=cassandra
-#      - CASSANDRA_USER=cassandra
-    volumes:
-      - ./cassandra:/docker-entrypoint-initdb.d
-    networks:
-      - fundamental-network
+      - payroll-network
 
   employee:
     image: thaso-example/employee:1.0
@@ -61,14 +43,13 @@ services:
       dockerfile: src/main/docker/Dockerfile.jvm
     depends_on:
       - kafka
-      - database
     ports:
       - "8081:8080"
     restart: always
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     networks:
-      - fundamental-network
+      - payroll-network
 
   worktime:
     image: thaso-example/worktime:1.0
@@ -77,15 +58,15 @@ services:
       dockerfile: src/main/docker/Dockerfile.jvm
     depends_on:
       - kafka
-      - database
     ports:
       - "8082:8080"
     restart: always
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     networks:
-      - fundamental-network
+      - payroll-network
 
 networks:
-  fundamental-network:
-    name: funet
+  payroll-network:
+    name: payroll
+    external: true

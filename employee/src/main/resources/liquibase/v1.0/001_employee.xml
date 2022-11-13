@@ -14,11 +14,7 @@
             <column name="number" type="text">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="surename" type="text"/>
-            <column name="firstname" type="text"/>
-            <column name="street" type="text"/>
-            <column name="plz" type="text"/>
-            <column name="city" type="text"/>
+            <column name="name" type="text"/>
             <column name="iban" type="text"/>
             <column name="weeklyhours" type="decimal"/>
             <column name="wagerate" type="decimal"/>

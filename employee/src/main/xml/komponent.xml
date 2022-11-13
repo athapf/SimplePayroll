@@ -1,43 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<komponent name="Employee">
+<komponent name="Employee" package="employee">
 
-    <resources path="operativ/leistung/payroll">
-        <resource name="Employees"
-                  path="employees"
-                  entity="Employee"
-                  controller="EmployeeController">
-            <method type="GET" name="findAllEmployees" result="list"/>
-            <method type="POST" name="createEmployee"/>
-            <method type="GET" name="findEmployee" result="single">
-                <path-parameter name="number" java-type="String"/>
+    <resources path="employee">
+        <resource name="Employee"
+                  path=""
+                  service="EmployeeService">
+            <dto name="Employee" entity="Employee"/>
+            <method type="GET"
+                    name="findAllEmployee"
+                    result="list"
+                    dto="Employee"/>
+            <method type="POST"
+                    name="updateEmployee"
+                    dto="Employee"/>
+            <method type="PUT"
+                    name="createEmployee"
+                    dto="Employee"/>
+            <method type="GET"
+                    path="{number}"
+                    name="findEmplyeeByNumber"
+                    result="single"
+                    dto="Employee">
+                <param name="Number" type="String"/>
             </method>
         </resource>
     </resources>
 
     <topics>
-        <producer topic="values" entity="Employee"/>
+        <producer name="send"
+                  topic="employee"
+                  object="record"
+                  key="String">
+            <dto name="Employee" entity="Employee"/>
+        </producer>
     </topics>
 
-    <database>
-        <dao target="cassandra" entity="Employee">
-            <update/>
-            <select/>
-            <store/>
+    <database keyspace="employee">
+        <dao name="Employee" target="cassandra">
+            <crud entity="Employee"/>
+            <entity name="Employee" data="Employee"/>
         </dao>
     </database>
 
     <datacatalog>
         <entity name="Employee">
             <field name="Number" type="String" key="true"/>
-            <field name="SureName" type="String"/>
-            <field name="FirstName" type="String"/>
-            <field name="Street" type="String"/>
-            <field name="PLZ" type="String"/>
-            <field name="City" type="String"/>
-            <field name="IBAN" type="String"/>
-            <field name="WeeklyHours" type="BigDecimal"/>
-            <field name="WageRate" type="BigDecimal"/>
+            <field name="Name" type="String"/>
+            <field name="Iban" type="String"/>
+            <field name="Weeklyhours" type="BigDecimal"/>
+            <field name="Wagerate" type="BigDecimal"/>
         </entity>
     </datacatalog>
 </komponent>

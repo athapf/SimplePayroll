@@ -1,39 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<komponent name="Worktime">
+<komponent name="Worktime" package="worktime">
 
-    <resources path="operativ/leistung/payroll">
-        <resource name="Worktimes"
-                  path="worktimes"
-                  entity="Worktime"
-                  controller="WorktimeController">
-            <method type="GET" path="/reset" name="doReset"/>
+    <resources path="worktime">
+        <resource name="Worktime"
+                  path=""
+                  service="WorktimeService">
+            <dto name="Worktime" entity="Worktime"/>
+            <method type="GET"
+                    name="findAllWorktime"
+                    result="list"
+                    dto="Worktime"/>
+            <method type="POST"
+                    name="updateWorktime"
+                    dto="Worktime"/>
+            <method type="PUT"
+                    name="createWorktime"
+                    dto="Worktime"/>
         </resource>
     </resources>
 
     <topics>
-        <consumer topic="values" entity="Worktime" controller="WorktimeController"/>
+        <consumer name="consumeEmployee"
+                  topic="employee"
+                  service="WorktimeService"
+                  key="String">
+            <dto name="Employee" entity="Employee"/>
+        </consumer>
+        <producer name="send"
+                  topic="worktime"
+                  entity="Worktime"
+                  object="record"
+                  key="String">
+            <dto name="Worktime" entity="Worktime"/>
+        </producer>
     </topics>
 
-    <database>
-        <dao target="cassandra" entity="Worktime">
-            <update/>
-            <select/>
-            <store/>
+    <database kespace="worktime">
+        <dao name="Employee" target="cassandra">
+            <crud entity="Employee"/>
+            <entity name="Employee" data="Employee"/>
+        </dao>
+        <dao name="Worktime" target="cassandra">
+            <crud entity="Worktime"/>
+            <entity name="Worktime" data="Worktime"/>
         </dao>
     </database>
 
     <datacatalog>
         <entity name="Employee">
             <field name="Number" type="String" key="true"/>
-            <field name="SureName" type="String"/>
-            <field name="FirstName" type="String"/>
-            <field name="WeeklyHours" type="BigDecimal"/>
+            <field name="Name" type="String"/>
+            <field name="Weeklyhours" type="BigDecimal"/>
+            <field name="Wagerate" type="BigDecimal"/>
         </entity>
         <entity name="Worktime">
-            <field name="id" type="String" key="true"/>
-            <field name="Number" type="String"/>
+            <field name="Number" type="String" key="true"/>
+            <field name="Houre" type="BigDecimal"/>
             <field name="Date" type="Date"/>
+            <field name="Createdon" type="Date"/>
         </entity>
     </datacatalog>
 </komponent>

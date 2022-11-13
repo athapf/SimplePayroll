@@ -8,7 +8,6 @@
     <artifactId>simple-payroll</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-
     <properties>
         <java.version>11</java.version>
         <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
@@ -25,7 +24,14 @@
         <asciidoctorj.version>1.6.2</asciidoctorj.version>
         <asciidoctorj.diagram.version>1.5.18</asciidoctorj.diagram.version>
         <jruby.version>9.2.9.0</jruby.version>
+        <generate-excludes></generate-excludes>
     </properties>
+
+    <modules>
+        <module>generate</module>
+        <module>employee</module>
+        <module>worktime</module>
+    </modules>
 
     <dependencyManagement>
         <dependencies>
@@ -123,8 +129,12 @@
                                         <value>${project.build.directory}/generated-sources/xml</value>
                                     </parameter>
                                     <parameter>
-                                        <name>PackagePath</name>
+                                        <name>KomponentPath</name>
                                         <value>de/thaso/demo/examples/simplepayroll</value>
+                                    </parameter>
+                                    <parameter>
+                                        <name>Exclude</name>
+                                        <value>${generate-excludes}</value>
                                     </parameter>
                                 </parameters>
                                 <outputDir>${project.build.directory}/generated-sources/xml</outputDir>
@@ -172,121 +182,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.asciidoctor</groupId>
-                <artifactId>asciidoctor-maven-plugin</artifactId>
-                <version>${asciidoctor.maven.plugin.version}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.jruby</groupId>
-                        <artifactId>jruby-complete</artifactId>
-                        <version>${jruby.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.asciidoctor</groupId>
-                        <artifactId>asciidoctorj</artifactId>
-                        <version>${asciidoctorj.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.asciidoctor</groupId>
-                        <artifactId>asciidoctorj-diagram</artifactId>
-                        <version>${asciidoctorj.diagram.version}</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <sourceDirectory>generate/src/main/docs/asciidoc</sourceDirectory>
-                    <requires>
-                        <require>asciidoctor-diagram</require>
-                    </requires>
-                    <!--<graphvizdot>/usr/bin/dot</graphvizdot>-->
-                    <outputDirectory>${project.build.directory}/generated-docs</outputDirectory>
-                    <backend>docbook</backend>
-                    <doctype>article</doctype>
-                    <attributes>
-                        <project-version>${project.version}</project-version>
-                    </attributes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>generate-pdf-doc-custom-theme</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                        <configuration>
-                            <sourceHighlighter>coderay</sourceHighlighter>
-                            <attributes>
-                                <icons>font</icons>
-                                <pagenums/>
-                                <toc/>
-                                <idprefix/>
-                                <idseparator>-</idseparator>
-                            </attributes>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>copy-resource-images</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/generated-docs/images</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.basedir}/src/docs/assests/images</directory>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.agilejava.docbkx</groupId>
-                <artifactId>docbkx-maven-plugin</artifactId>
-                <version>2.0.17</version>
-                <executions>
-                    <execution>
-                        <id>draft-output</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>generate-pdf</goal>
-                        </goals>
-                        <configuration>
-                            <!-- per execution configuration -->
-                            <draftMode>yes</draftMode>
-                        </configuration>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!-- shared configuration -->
-                    <sourceDirectory>${project.build.directory}/generated-docs</sourceDirectory>
-                    <includes>*.xml</includes>
-                    <generatedSourceDirectory>${project.build.directory}/docbkx/generated</generatedSourceDirectory>
-                    <xincludeSupported>true</xincludeSupported>
-                    <highlightSource>1</highlightSource>
-                    <paperType>A4</paperType>
-                    <fop1Extensions>1</fop1Extensions>
-                    <foCustomization>generate/src/main/docs/stylesheets/docbook.xsl</foCustomization>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>net.sf.docbook</groupId>
-                        <artifactId>docbook-xml</artifactId>
-                        <version>5.0-all</version>
-                        <classifier>resources</classifier>
-                        <type>zip</type>
-                        <scope>runtime</scope>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
-            <plugin>
                 <groupId>${quarkus.platform.group-id}</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
                 <version>${quarkus.platform.version}</version>
@@ -310,10 +205,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <modules>
-        <module>generate</module>
-        <module>employee</module>
-        <module>worktime</module>
-    </modules>
 </project>

@@ -18,6 +18,6 @@ public class AppLifeCycleBean {
 
     void onStart(@Observes StartupEvent event) {
         LOGGER.info("==> The application is starting ...");
-        //migrationService.checkMigration();
+        migrationService.checkMigration();
     }
 }

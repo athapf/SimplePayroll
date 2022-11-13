@@ -1,0 +1,21 @@
+version: '3.5'
+
+services:
+  database:
+    image: cassandra:4
+    ports:
+      - "9042:9042"
+    restart: always
+    environment:
+      - CASSANDRA_DC=datacenter1
+    volumes:
+      - app_data:/var/lib/cassandra
+    networks:
+      - payroll-network
+
+volumes:
+  app_data:
+
+networks:
+  payroll-network:
+    name: payroll
