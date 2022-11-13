@@ -22,6 +22,6 @@ private static final Logger LOGGER = Logger.getLogger(WorktimeResource.class);
     @PUT
     public void createWorktime(final Worktime worktime) {
         LOGGER.info("createWorktime: " + worktime.toString());
-        worktimeProducer.sendWorktime(worktime.getNumber(), worktime);
+        worktimeProducer.sendWorktime(worktime);
     }
 }

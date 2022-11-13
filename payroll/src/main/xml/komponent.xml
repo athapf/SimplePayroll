@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<komponent name="Payroll" package="payroll">
+
+    <resources path="payroll">
+        <resource name="Payroll"
+                  path=""
+                  service="PayrollService">
+            <dto name="Monthvalue" entity="Monthvalue"/>
+            <method type="GET"
+                    name="findAllPayroll"
+                    result="list"
+                    dto="Payroll"/>
+        </resource>
+    </resources>
+
+    <topics>
+        <consumer name="consumePayroll"
+                  topic="monthvalue"
+                  service="PayrollService"
+                  key="String">
+            <dto name="Monthvalue" entity="Monthvalue"/>
+        </consumer>
+    </topics>
+
+    <datacatalog>
+        <entity name="Payroll">
+            <field name="Number" type="String" key="true"/>
+            <field name="Sum" type="BigDecimal"/>
+        </entity>
+        <entity name="Monthvalue">
+            <field name="Number" type="String" key="true"/>
+            <field name="Hour" type="BigDecimal"/>
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="Createdon" type="Date"/>
+        </entity>
+    </datacatalog>
+</komponent>

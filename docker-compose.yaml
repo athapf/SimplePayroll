@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.5'
 
 services:
   zookeeper:
@@ -58,8 +58,41 @@ services:
       dockerfile: src/main/docker/Dockerfile.jvm
     depends_on:
       - kafka
+      - employee
     ports:
       - "8082:8080"
+    restart: always
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    networks:
+      - payroll-network
+
+  monthvalue:
+    image: thaso-example/monthvalue:1.0
+    build:
+      context: monthvalue
+      dockerfile: src/main/docker/Dockerfile.jvm
+    depends_on:
+      - kafka
+      - worktime
+    ports:
+      - "8083:8080"
+    restart: always
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    networks:
+      - payroll-network
+
+  payroll:
+    image: thaso-example/payroll:1.0
+    build:
+      context: payroll
+      dockerfile: src/main/docker/Dockerfile.jvm
+    depends_on:
+      - kafka
+      - monthvalue
+    ports:
+      - "8084:8080"
     restart: always
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092

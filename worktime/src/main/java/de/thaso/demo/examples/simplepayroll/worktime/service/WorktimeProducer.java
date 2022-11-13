@@ -11,12 +11,18 @@ import javax.enterprise.context.ApplicationScoped;
 public class WorktimeProducer {
     private static final Logger LOGGER = Logger.getLogger(WorktimeProducer.class);
 
+/*
     @Channel("worktime")
     private Emitter<Record<String, Worktime>> worktimeDtoEmitter;
+*/
 
-    public Worktime sendWorktime(final String key, final Worktime worktime) {
+    @Channel("worktime")
+    private Emitter<Worktime> worktimeDtoEmitter;
+
+    public Worktime sendWorktime(final Worktime worktime) {
         LOGGER.info("sendWorktime: " + worktime.toString());
-        worktimeDtoEmitter.send(Record.of(key, worktime));
+        worktimeDtoEmitter.send(worktime);
+//        worktimeDtoEmitter.send(Record.of(key, worktime));
         return worktime;
     }
 }

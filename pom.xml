@@ -32,6 +32,7 @@
         <module>employee</module>
         <module>worktime</module>
         <module>monthvalue</module>
+        <module>payroll</module>
     </modules>
 
     <dependencyManagement>
