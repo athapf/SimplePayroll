@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<komponent name="Transferdata" package="transferdata">
+
+    <resources path="transferdata">
+        <resource name="Transferdata"
+                  path=""
+                  service="TransferdataService">
+            <dto name="Transferdata" entity="Transferdata"/>
+            <method type="GET"
+                    name="findAllTransferdata"
+                    result="list"
+                    dto="Transferdata"/>
+        </resource>
+    </resources>
+
+    <topics>
+        <consumer name="consumeEmployee"
+                  topic="employee"
+                  service="TransferdataService"
+                  key="String">
+            <dto name="Employee" entity="Employee"/>
+        </consumer>
+        <consumer name="consumePayroll"
+                  topic="payroll"
+                  service="TransferdataService"
+                  key="String">
+            <dto name="Payroll" entity="Payroll"/>
+        </consumer>
+    </topics>
+
+    <database keyspace="transferdata">
+        <dao name="Employee" target="cassandra">
+            <crud entity="Employee"/>
+            <entity name="Employee" data="Employee"/>
+        </dao>
+        <dao name="Payroll" target="cassandra">
+            <crud entity="Payroll"/>
+            <entity name="Payroll" data="Payroll"/>
+        </dao>
+        <dao name="Transferdata" target="cassandra">
+            <crud entity="Transferdata"/>
+            <entity name="Transferdata" data="Transferdata"/>
+        </dao>
+    </database>
+
+    <datacatalog>
+        <entity name="Employee">
+            <field name="Number" type="String" key="true"/>
+            <field name="Name" type="String"/>
+            <field name="Iban" type="String"/>
+        </entity>
+        <entity name="Payroll">
+            <field name="Number" type="String" key="true"/>
+            <field name="Name" type="String"/>
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="Transferamount" type="BigDecimal"/>
+            <field name="MonthelementList" type="String"/>
+        </entity>
+        <entity name="Monthelement">
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="Totalhoure" type="BigDecimal"/>
+            <field name="Difference" type="BigDecimal"/>
+            <field name="Caremount" type="BigDecimal"/>
+            <field name="Caredifference" type="BigDecimal"/>
+        </entity>
+        <entity name="Transferdata">
+            <field name="Number" type="String" key="true"/>
+            <field name="Name" type="String"/>
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="Amount" type="BigDecimal"/>
+            <field name="Iban" type="String"/>
+        </entity>
+    </datacatalog>
+</komponent>

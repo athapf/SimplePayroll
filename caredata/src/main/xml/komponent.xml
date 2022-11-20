@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<komponent name="Caredata" package="caredata">
+
+    <resources path="caredata">
+        <resource name="Caredata"
+                  path=""
+                  service="CaredataService">
+            <dto name="Caredata" entity="Caredata"/>
+            <method type="GET"
+                    name="findAllCaredata"
+                    result="list"
+                    dto="Caredata"/>
+        </resource>
+        <resource name="Maintenance"
+                  path=""
+                  service="CaredataService">
+            <dto name="Createcaredata" entity="Createcaredata"/>
+            <method type="PUT"
+                    name="startCaredata"
+                    dto="Createcaredata"/>
+        </resource>
+    </resources>
+
+    <topics>
+        <consumer name="consumeEmployee"
+                  topic="employee"
+                  service="CaredataService"
+                  key="String">
+            <dto name="Employee" entity="Employee"/>
+        </consumer>
+        <consumer name="consumePayroll"
+                  topic="payroll"
+                  service="CaredataService"
+                  key="String">
+            <dto name="Payroll" entity="Payroll"/>
+        </consumer>
+        <producer name="send"
+                  topic="caredata"
+                  entity="Caredata"
+                  object="record"
+                  key="String">
+            <dto name="Caredata" entity="Caredata"/>
+        </producer>
+    </topics>
+
+    <database keyspace="caredata">
+        <dao name="Employee" target="cassandra">
+            <crud entity="Employee"/>
+            <entity name="Employee" data="Employee"/>
+        </dao>
+        <dao name="Payroll" target="cassandra">
+            <crud entity="Payroll"/>
+            <entity name="Payroll" data="Payroll"/>
+        </dao>
+        <dao name="Caredata" target="cassandra">
+            <crud entity="Caredata"/>
+            <entity name="Caredata" data="Caredata"/>
+        </dao>
+    </database>
+
+    <datacatalog>
+        <entity name="Employee">
+            <field name="Number" type="String" key="true"/>
+            <field name="Name" type="String"/>
+        </entity>
+        <entity name="Payroll">
+            <field name="Number" type="String" key="true"/>
+            <field name="Name" type="String"/>
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="Transferamount" type="BigDecimal"/>
+            <field name="MonthelementList" type="String"/>
+        </entity>
+        <entity name="Monthelement">
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="Totalhoure" type="BigDecimal"/>
+            <field name="Difference" type="BigDecimal"/>
+            <field name="Caremount" type="BigDecimal"/>
+            <field name="Caredifference" type="BigDecimal"/>
+        </entity>
+        <entity name="Caredata">
+            <field name="Number" type="String" key="true"/>
+            <field name="Name" type="String"/>
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="careamount" type="BigDecimal"/>
+            <field name="Difference" type="BigDecimal"/>
+        </entity>
+        <entity name="Createcaredata">
+            <field name="Id" type="String" key="true"/>
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="Createdon" type="Date"/>
+        </entity>
+    </datacatalog>
+</komponent>

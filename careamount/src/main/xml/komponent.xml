@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<komponent name="Careamount" package="careamount">
+
+    <resources path="careamount">
+        <resource name="Careamount"
+                  path=""
+                  service="CareamountService">
+            <dto name="Careamount" entity="Careamount"/>
+            <method type="GET"
+                    name="findAllCareamount"
+                    result="list"
+                    dto="Careamount"/>
+        </resource>
+    </resources>
+
+    <topics>
+        <consumer name="consumeMonthvalue"
+                  topic="monthvalue"
+                  service="CareamountService"
+                  key="String">
+            <dto name="Monthvalue" entity="Monthvalue"/>
+        </consumer>
+        <producer name="send"
+                  topic="careamount"
+                  entity="Careamount"
+                  object="record"
+                  key="String">
+            <dto name="Careamount" entity="Careamount"/>
+        </producer>
+    </topics>
+
+    <database keyspace="careamount">
+        <dao name="Careamount" target="cassandra">
+            <crud entity="Careamount"/>
+            <entity name="Careamount" data="Careamount"/>
+        </dao>
+    </database>
+
+    <datacatalog>
+        <entity name="Careamount">
+            <field name="Number" type="String" key="true"/>
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="Total" type="BigDecimal"/>
+            <field name="careamount" type="BigDecimal"/>
+            <field name="Difference" type="BigDecimal"/>
+        </entity>
+        <entity name="Monthvalue">
+            <field name="Number" type="String" key="true"/>
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="Hour" type="BigDecimal"/>
+            <field name="Difference" type="BigDecimal"/>
+            <field name="Grosssalery" type="BigDecimal"/>
+            <field name="Createdon" type="Date"/>
+        </entity>
+    </datacatalog>
+</komponent>

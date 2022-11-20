@@ -30,7 +30,7 @@
         </producer>
     </topics>
 
-    <database kespace="monthvalue">
+    <database keyspace="monthvalue">
         <dao name="Worktime" target="cassandra">
             <crud entity="Worktime"/>
             <entity name="Worktime" data="Worktime"/>
@@ -42,17 +42,25 @@
     </database>
 
     <datacatalog>
-        <entity name="Worktime">
-            <field name="Number" type="String" key="true"/>
-            <field name="Hour" type="BigDecimal"/>
-            <field name="Date" type="Date"/>
-            <field name="Createdon" type="Date"/>
+        <entity name="Employee">
+            <field name="number" type="String"/>
+            <field name="Weeklyhours" type="BigDecimal"/>
+            <field name="Wagerate" type="BigDecimal"/>
         </entity>
-        <entity name="Monthvalue">
+        <entity name="Worktime">
             <field name="Number" type="String" key="true"/>
             <field name="Hour" type="BigDecimal"/>
             <field name="Month" type="Integer"/>
             <field name="Year" type="Integer"/>
+            <field name="Createdon" type="Date"/>
+        </entity>
+        <entity name="Monthvalue">
+            <field name="Number" type="String" key="true"/>
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="Hour" type="BigDecimal"/>
+            <field name="Difference" type="BigDecimal"/>
+            <field name="Grosssalery" type="BigDecimal"/>
             <field name="Createdon" type="Date"/>
         </entity>
     </datacatalog>

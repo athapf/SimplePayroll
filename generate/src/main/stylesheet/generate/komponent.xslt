@@ -11,6 +11,8 @@
     <xsl:import href="./cassandra/mapper.xslt"/>
     <xsl:import href="./cassandra/dao.xslt"/>
     <xsl:import href="./cassandra/initdb.xslt"/>
+    <xsl:import href="./addon/liquibase.xslt"/>
+    <xsl:import href="./addon/properties.xslt"/>
 
     <xsl:template match="komponent">
         <xsl:apply-templates select="./descendant::dto"/>
@@ -26,5 +28,7 @@
         <xsl:apply-templates select="./descendant::database/dao" mode="dao-mapper"/>
         <xsl:apply-templates select="./descendant::database/dao" mode="dao"/>
         <xsl:apply-templates select="./descendant::database" mode="cassandra"/>
+        <xsl:apply-templates select="./descendant::database" mode="liquibase-init"/>
+        <xsl:apply-templates select="." mode="properties"/>
     </xsl:template>
 </xsl:stylesheet>

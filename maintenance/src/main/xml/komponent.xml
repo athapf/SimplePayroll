@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<komponent name="Maintenance" package="maintenance">
+
+    <resources path="maintenance">
+        <resource name="Maintenance"
+                  path=""
+                  service="MaintenanceService">
+            <dto name="Maintenance" entity="Maintenance"/>
+            <method type="PUT"
+                    name="startPayroll"
+                    dto="Maintenance"/>
+        </resource>
+    </resources>
+
+    <topics>
+        <producer name="send"
+                  topic="maintenance"
+                  entity="Maintenance"
+                  object="record"
+                  key="String">
+            <dto name="Maintenance" entity="Maintenance"/>
+        </producer>
+    </topics>
+
+    <database keyspace="maintenance">
+        <dao name="Maintenance" target="cassandra">
+            <crud entity="Maintenance"/>
+            <entity name="Maintenance" data="Maintenance"/>
+        </dao>
+    </database>
+
+    <datacatalog>
+        <entity name="Maintenance">
+            <field name="Id" type="String" key="true"/>
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="Createdon" type="Date"/>
+        </entity>
+    </datacatalog>
+</komponent>

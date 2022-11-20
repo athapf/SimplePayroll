@@ -33,6 +33,11 @@
         <module>worktime</module>
         <module>monthvalue</module>
         <module>payroll</module>
+        <module>careamount</module>
+        <module>caredata</module>
+        <module>carereport</module>
+        <module>transferdata</module>
+        <module>maintenance</module>
     </modules>
 
     <dependencyManagement>
@@ -68,6 +73,7 @@
                     <version>3.0.0</version>
                     <executions>
                         <execution>
+                            <id>add-source-dir</id>
                             <phase>generate-sources</phase>
                             <goals>
                                 <goal>add-source</goal>
@@ -76,6 +82,20 @@
                                 <sources>
                                     <source>${project.build.directory}/generated-sources/xml</source>
                                 </sources>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>add-resource-dir</id>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>add-resource</goal>
+                            </goals>
+                            <configuration>
+                                <resources>
+                                    <resource>
+                                        <directory>${project.build.directory}/generated-sources/res</directory>
+                                    </resource>
+                                </resources>
                             </configuration>
                         </execution>
                     </executions>

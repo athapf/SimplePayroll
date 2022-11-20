@@ -33,13 +33,13 @@ employee (Message)
 worktime (Message)
 
 number : text
-billingmonth : number
-billingyear : number
+month : number
+year : number
 totalhours : decimal
 difference : decimal
 grosssalary : decimal
 
-## careinsurenceamount
+## careamount
 
 monthvalue (Message)
 
@@ -47,14 +47,16 @@ number : text
 month : number
 year : number
 total : decimal
+careamount : decimal
 difference : decimal
 
 ## maintenance
 
 startPayroll (Rest)
 
-billingmonth : number
-billingyear : number
+month : number
+year : number
+createdon : date
 
 ## payroll
 
@@ -76,7 +78,7 @@ billingyear : number
   caredifference : decimal
 transferamount : decimal
 
-## careinsurancedata
+## caredata
 
 createReport (Rest)
 employee (Message)
@@ -95,18 +97,16 @@ employee (Message)
 employee (Message)
 createTransfer (Rest)
 
-<list>
 number : text
 name : text
 amount : decimal
 month : number
 year : number
 
-## careinsurancereport
+## carereport
 
 careinsurancedata (Message)
 
-<list>
 name : text
 amount : decimal
 month : number

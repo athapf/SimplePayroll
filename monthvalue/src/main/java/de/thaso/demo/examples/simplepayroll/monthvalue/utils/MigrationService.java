@@ -7,6 +7,7 @@ import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.resource.ClassLoaderResourceAccessor;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -16,6 +17,9 @@ import java.sql.DriverManager;
 @ApplicationScoped
 public class MigrationService {
     private static final Logger LOGGER = Logger.getLogger("MigrationService");
+
+    @ConfigProperty(name = "quarkus.cassandra.keyspace")
+    String keyspace;
 
     public void checkMigration() {
         LOGGER.info("==> check migartion ...");
@@ -36,11 +40,11 @@ public class MigrationService {
 
     private Connection openConnection() {
 
-        LOGGER.info("==> open connection ...");
+        LOGGER.info("==> open connection (" + keyspace + ") ...");
         Connection con = null;
         try {
             Class.forName("com.simba.cassandra.jdbc42.Driver");
-            con = DriverManager.getConnection("jdbc:cassandra://database:9042/monthvalue;DefaultKeyspace=monthvalue;datacenter1");
+            con = DriverManager.getConnection("jdbc:cassandra://database:9042/" + keyspace + ";DefaultKeyspace=" + keyspace + ";datacenter1");
         } catch (Throwable e) {
             LOGGER.info("==> ... could not open connection");
             throw new RuntimeException(e);

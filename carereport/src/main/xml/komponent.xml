@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<komponent name="Carereport" package="carereport">
+
+    <resources path="carereport">
+        <resource name="Carereport"
+                  path=""
+                  service="CarereportService">
+            <dto name="Carereport" entity="Carereport"/>
+            <method type="GET"
+                    name="findAllCarereport"
+                    result="list"
+                    dto="Carereport"/>
+        </resource>
+    </resources>
+
+    <topics>
+        <consumer name="consumeCaredata"
+                  topic="caredata"
+                  service="CarereportService"
+                  key="String">
+            <dto name="Caredata" entity="Caredata"/>
+        </consumer>
+    </topics>
+
+    <database keyspace="carereport">
+        <dao name="Caredata" target="cassandra">
+            <crud entity="Caredata"/>
+            <entity name="Caredata" data="Caredata"/>
+        </dao>
+    </database>
+
+    <datacatalog>
+        <entity name="Caredata">
+            <field name="Number" type="String" key="true"/>
+            <field name="Name" type="String"/>
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="Careamount" type="BigDecimal"/>
+            <field name="Difference" type="BigDecimal"/>
+        </entity>
+        <entity name="Carereport">
+            <field name="Number" type="String" key="true"/>
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="Careamount" type="BigDecimal"/>
+            <field name="Difference" type="BigDecimal"/>
+            <field name="Createdon" type="Date"/>
+        </entity>
+    </datacatalog>
+</komponent>

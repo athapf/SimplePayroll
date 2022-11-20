@@ -6,7 +6,7 @@
         <resource name="Payroll"
                   path=""
                   service="PayrollService">
-            <dto name="Monthvalue" entity="Monthvalue"/>
+            <dto name="Payroll" entity="Payroll"/>
             <method type="GET"
                     name="findAllPayroll"
                     result="list"
@@ -21,19 +21,55 @@
                   key="String">
             <dto name="Monthvalue" entity="Monthvalue"/>
         </consumer>
+        <producer name="send"
+                  topic="payroll"
+                  entity="Payroll"
+                  object="record"
+                  key="String">
+            <dto name="Payroll" entity="Payroll"/>
+        </producer>
     </topics>
 
+    <database keyspace="payroll">
+        <dao name="Payroll" target="cassandra">
+            <crud entity="Payroll"/>
+            <entity name="Payroll" data="Payroll"/>
+        </dao>
+    </database>
+
     <datacatalog>
-        <entity name="Payroll">
+        <entity name="Employee">
             <field name="Number" type="String" key="true"/>
-            <field name="Sum" type="BigDecimal"/>
+            <field name="Name" type="String"/>
+            <field name="Iban" type="String"/>
         </entity>
-        <entity name="Monthvalue">
-            <field name="Number" type="String" key="true"/>
-            <field name="Hour" type="BigDecimal"/>
+        <entity name="Maintenance">
             <field name="Month" type="Integer"/>
             <field name="Year" type="Integer"/>
             <field name="Createdon" type="Date"/>
+        </entity>
+        <entity name="Monthvalue">
+            <field name="Number" type="String" key="true"/>
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="Hour" type="BigDecimal"/>
+            <field name="Createdon" type="Date"/>
+        </entity>
+        <entity name="Payroll">
+            <field name="Number" type="String" key="true"/>
+            <field name="Name" type="String"/>
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="Transferamount" type="BigDecimal"/>
+            <field name="MonthelementList" type="String"/>
+        </entity>
+        <entity name="Monthelement">
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="Totalhoure" type="BigDecimal"/>
+            <field name="Difference" type="BigDecimal"/>
+            <field name="Caremount" type="BigDecimal"/>
+            <field name="Caredifference" type="BigDecimal"/>
         </entity>
     </datacatalog>
 </komponent>
