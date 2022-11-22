@@ -14,8 +14,8 @@
             <xsl:text>quarkus.cassandra.keyspace=</xsl:text>
             <xsl:value-of select="./database/@keyspace"/>
             <xsl:text>&#xA;</xsl:text>
-            <xsl:text>#quarkus.cassandra.auth.username=cassandra&#xA;</xsl:text>
-            <xsl:text>#quarkus.cassandra.auth.password=cassandra&#xA;</xsl:text>
+            <xsl:text>quarkus.cassandra.auth.username=cassandra&#xA;</xsl:text>
+            <xsl:text>quarkus.cassandra.auth.password=cassandra&#xA;</xsl:text>
             <xsl:text>&#xA;</xsl:text>
             <xsl:text>quarkus.liquibase.schemas=DEFAULT_TEST_SCHEMA&#xA;</xsl:text>
             <xsl:text>quarkus.liquibase.change-log=db/changeLog.xml&#xA;</xsl:text>
@@ -33,12 +33,12 @@
             </xsl:for-each>
             <xsl:for-each select="./topics/consumer">
                 <xsl:text>&#xA;</xsl:text>
-                <xsl:text>mp.messaging.outgoing.</xsl:text>
+                <xsl:text>mp.messaging.incomming.</xsl:text>
                 <xsl:value-of select="./@topic"/>
                 <xsl:text>.topic=</xsl:text>
                 <xsl:value-of select="./@topic"/>
                 <xsl:text>&#xA;</xsl:text>
-                <xsl:text>mp.messaging.outgoing.</xsl:text>
+                <xsl:text>mp.messaging.incomming.</xsl:text>
                 <xsl:value-of select="./@topic"/>
                 <xsl:text>.connector=smallrye-kafka&#xA;</xsl:text>
             </xsl:for-each>

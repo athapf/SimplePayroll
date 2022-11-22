@@ -12,6 +12,7 @@
             <xsl:when test="./@type='BigDecimal'">decimal</xsl:when>
             <xsl:when test="./@type='Date'">date</xsl:when>
             <xsl:when test="./@type='Long'">bigint</xsl:when>
+            <xsl:when test="./@type='Integer'">int</xsl:when>
             <xsl:otherwise>text</xsl:otherwise>
         </xsl:choose>
         <xsl:if test="./@key">

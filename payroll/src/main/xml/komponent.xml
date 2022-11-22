@@ -2,9 +2,9 @@
 
 <komponent name="Payroll" package="payroll">
 
-    <resources path="payroll">
+    <resources>
         <resource name="Payroll"
-                  path=""
+                  path="payroll"
                   service="PayrollService">
             <dto name="Payroll" entity="Payroll"/>
             <method type="GET"
@@ -15,11 +15,17 @@
     </resources>
 
     <topics>
-        <consumer name="consumePayroll"
+        <consumer name="consumeMonthvalue"
                   topic="monthvalue"
                   service="PayrollService"
                   key="String">
             <dto name="Monthvalue" entity="Monthvalue"/>
+        </consumer>
+        <consumer name="consumeCareamount"
+                  topic="careamount"
+                  service="PayrollService"
+                  key="String">
+            <dto name="Careamount" entity="Careamount"/>
         </consumer>
         <producer name="send"
                   topic="payroll"
@@ -35,6 +41,10 @@
             <crud entity="Payroll"/>
             <entity name="Payroll" data="Payroll"/>
         </dao>
+        <dao name="Employee" target="cassandra">
+            <crud entity="Employee"/>
+            <entity name="Employee" data="Employee"/>
+        </dao>
     </database>
 
     <datacatalog>
@@ -46,14 +56,25 @@
         <entity name="Maintenance">
             <field name="Month" type="Integer"/>
             <field name="Year" type="Integer"/>
-            <field name="Createdon" type="Date"/>
+            <field name="Createdon" type="String"/>
         </entity>
         <entity name="Monthvalue">
-            <field name="Number" type="String" key="true"/>
+            <field name="Id" type="String" key="true"/>
+            <field name="Number" type="String"/>
             <field name="Month" type="Integer"/>
             <field name="Year" type="Integer"/>
             <field name="Hour" type="BigDecimal"/>
-            <field name="Createdon" type="Date"/>
+            <field name="Difference" type="BigDecimal"/>
+            <field name="Grosssalery" type="BigDecimal"/>
+            <field name="Createdon" type="String"/>
+        </entity>
+        <entity name="Careamount">
+            <field name="Number" type="String" key="true"/>
+            <field name="Month" type="Integer"/>
+            <field name="Year" type="Integer"/>
+            <field name="Total" type="BigDecimal"/>
+            <field name="careamount" type="BigDecimal"/>
+            <field name="Difference" type="BigDecimal"/>
         </entity>
         <entity name="Payroll">
             <field name="Number" type="String" key="true"/>

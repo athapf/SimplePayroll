@@ -16,7 +16,7 @@ import java.sql.DriverManager;
 
 @ApplicationScoped
 public class MigrationService {
-    private static final Logger LOGGER = Logger.getLogger("MigrationService");
+    private static final Logger LOGGER = Logger.getLogger(MigrationService.class);
 
     @ConfigProperty(name = "quarkus.cassandra.keyspace")
     String keyspace;

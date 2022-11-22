@@ -1,10 +1,14 @@
 package de.thaso.demo.examples.simplepayroll.caredata.service;
 
+import org.jboss.logging.Logger;
+
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
 
 @ApplicationScoped
 public class CaredataServiceImpl implements CaredataService {
+    private static final Logger LOGGER = Logger.getLogger(CaredataServiceImpl.class);
+
     @Override
     public List<Caredata> findAllCaredata() {
         return null;

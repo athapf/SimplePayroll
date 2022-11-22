@@ -194,16 +194,7 @@
         </xsl:variable>
 
         <xsl:text>&#xA;</xsl:text>
-        <xsl:text>  public </xsl:text>
-        <xsl:choose>
-            <xsl:when test="./@result='paging'">
-                <xsl:text>PagingIterable</xsl:text>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:text>List</xsl:text>
-            </xsl:otherwise>
-        </xsl:choose>
-        <xsl:text>&lt;</xsl:text>
+        <xsl:text>  public List&lt;</xsl:text>
         <xsl:value-of select="$data"/>
         <xsl:text>&gt; findAll</xsl:text>
         <xsl:value-of select="$entity"/>
@@ -216,7 +207,7 @@
         <xsl:value-of select="$data"/>
         <xsl:text>List(worker.findAll</xsl:text>
         <xsl:value-of select="$entity"/>
-        <xsl:text>());&#xA;</xsl:text>
+        <xsl:text>().all());&#xA;</xsl:text>
         <xsl:text>  }&#xA;</xsl:text>
     </xsl:template>
 

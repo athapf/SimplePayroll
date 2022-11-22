@@ -2,9 +2,9 @@
 
 <komponent name="Worktime" package="worktime">
 
-    <resources path="worktime">
+    <resources>
         <resource name="Worktime"
-                  path=""
+                  path="worktime"
                   service="WorktimeService">
             <dto name="Worktime" entity="Worktime"/>
             <method type="GET"
@@ -13,9 +13,11 @@
                     dto="Worktime"/>
             <method type="POST"
                     name="updateWorktime"
+                    result="single"
                     dto="Worktime"/>
             <method type="PUT"
                     name="createWorktime"
+                    result="single"
                     dto="Worktime"/>
         </resource>
     </resources>
@@ -55,11 +57,12 @@
             <field name="Wagerate" type="BigDecimal"/>
         </entity>
         <entity name="Worktime">
-            <field name="Number" type="String" key="true"/>
-            <field name="Date" type="Date"/>
+            <field name="Id" type="String" key="true"/>
+            <field name="Number" type="String"/>
+            <field name="Date" type="String"/>
             <field name="Hour" type="BigDecimal"/>
             <field name="Difference" type="BigDecimal"/>
-            <field name="Createdon" type="Date"/>
+            <field name="Createdon" type="String"/>
         </entity>
     </datacatalog>
 </komponent>

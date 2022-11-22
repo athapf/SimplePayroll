@@ -62,16 +62,7 @@
     <xsl:template name="findAll">
         <xsl:text>&#xA;</xsl:text>
         <xsl:text>  @Select&#xA;</xsl:text>
-        <xsl:text>  </xsl:text>
-        <xsl:choose>
-            <xsl:when test="./@result='paging'">
-                <xsl:text>PagingIterable</xsl:text>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:text>List</xsl:text>
-            </xsl:otherwise>
-        </xsl:choose>
-        <xsl:text>&lt;</xsl:text>
+        <xsl:text>  PagingIterable&lt;</xsl:text>
         <xsl:value-of select="./@entity"/>
         <xsl:text>Entity&gt; findAll</xsl:text>
         <xsl:value-of select="./@entity"/>

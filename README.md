@@ -1,8 +1,56 @@
 
-# Beispiel
+# Build
+
+```
+  mvn clean install
+```
+
+## Start and Cleanup Docker
+
+```
+docker-compose up --build
+```
+
+```
+docker-compose stop ; docker-compose rm -f ; docker image prune -f ; docker volume prune -f
+```
+
+```
+docker-compose -f docker-cassandra.yaml up
+```
+
+```
+docker-compose -f docker-cassandra.yaml rm -f ; docker volume rm simplepayroll_app_data -f
+```
+
+## Init Cassandra
+
+```
+grep -h "CREATE KEYSPACE" ./*/target/generated-sources/cassandra/*.cql > cassandra/init.cql
+grep -h -v "CREATE KEYSPACE" ./*/target/generated-sources/cassandra/*.cql > cassandra/setup.cql
+```
+
+```
+docker cp cassandra/init.cql simplepayroll_database_1:/tmp/
+sleep 1
+docker cp cassandra/setup.cql simplepayroll_database_1:/tmp/
+sleep 1
+docker exec simplepayroll_database_1 cqlsh -f /tmp/init.cql
+sleep 3
+docker exec simplepayroll_database_1 cqlsh -f /tmp/setup.cql
+```
+
+# Examples
 
 ``` bash
-  curl --header "Content-Type: application/json" --request PUT --data '{"number":5421,"hour":4.3,"date":"2022-05-16"}' http://localhost:8082/worktime
+  curl --header "Content-Type: application/json" -X PUT --data '{"number":"7412","name":"Horst Buchmann","iban":"DE943865987236","weeklyhours":7.35,"wagerate":27.73}' http://localhost:8081/employee
+  
+  curl -X GET http://localhost:8081/employee
+
+  curl --header "Content-Type: application/json" -X PUT --data '{"number":7412,"hour":4.3,"date":"2022-05-16"}' http://localhost:8082/worktime
+  
+  curl -X GET http://localhost:8082/worktime
+  
 ```
 
 # Description

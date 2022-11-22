@@ -2,9 +2,9 @@
 
 <komponent name="Employee" package="employee">
 
-    <resources path="employee">
+    <resources>
         <resource name="Employee"
-                  path=""
+                  path="employee"
                   service="EmployeeService">
             <dto name="Employee" entity="Employee"/>
             <method type="GET"

@@ -2,9 +2,9 @@
 
 <komponent name="Transferdata" package="transferdata">
 
-    <resources path="transferdata">
+    <resources>
         <resource name="Transferdata"
-                  path=""
+                  path="transferdata"
                   service="TransferdataService">
             <dto name="Transferdata" entity="Transferdata"/>
             <method type="GET"

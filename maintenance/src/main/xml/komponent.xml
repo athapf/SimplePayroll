@@ -2,9 +2,9 @@
 
 <komponent name="Maintenance" package="maintenance">
 
-    <resources path="maintenance">
+    <resources>
         <resource name="Maintenance"
-                  path=""
+                  path="maintenance"
                   service="MaintenanceService">
             <dto name="Maintenance" entity="Maintenance"/>
             <method type="PUT"
@@ -35,7 +35,7 @@
             <field name="Id" type="String" key="true"/>
             <field name="Month" type="Integer"/>
             <field name="Year" type="Integer"/>
-            <field name="Createdon" type="Date"/>
+            <field name="Createdon" type="String"/>
         </entity>
     </datacatalog>
 </komponent>

@@ -1,5 +1,9 @@
-
-CREATE KEYSPACE IF NOT EXISTS employee WITH replication = {'class':'SimpleStrategy', 'replication_factor':1};
-CREATE KEYSPACE IF NOT EXISTS worktime WITH replication = {'class':'SimpleStrategy', 'replication_factor':1};
-CREATE KEYSPACE IF NOT EXISTS monthvalue WITH replication = {'class':'SimpleStrategy', 'replication_factor':1};
-CREATE KEYSPACE IF NOT EXISTS payroll WITH replication = {'class':'SimpleStrategy', 'replication_factor':1};
+CREATE KEYSPACE IF NOT EXISTS careamount WITH REPLICATION = {'class':'SimpleStrategy', 'replication_factor':1};
+CREATE KEYSPACE IF NOT EXISTS caredata WITH REPLICATION = {'class':'SimpleStrategy', 'replication_factor':1};
+CREATE KEYSPACE IF NOT EXISTS carereport WITH REPLICATION = {'class':'SimpleStrategy', 'replication_factor':1};
+CREATE KEYSPACE IF NOT EXISTS employee WITH REPLICATION = {'class':'SimpleStrategy', 'replication_factor':1};
+CREATE KEYSPACE IF NOT EXISTS maintenance WITH REPLICATION = {'class':'SimpleStrategy', 'replication_factor':1};
+CREATE KEYSPACE IF NOT EXISTS monthvalue WITH REPLICATION = {'class':'SimpleStrategy', 'replication_factor':1};
+CREATE KEYSPACE IF NOT EXISTS payroll WITH REPLICATION = {'class':'SimpleStrategy', 'replication_factor':1};
+CREATE KEYSPACE IF NOT EXISTS transferdata WITH REPLICATION = {'class':'SimpleStrategy', 'replication_factor':1};
+CREATE KEYSPACE IF NOT EXISTS worktime WITH REPLICATION = {'class':'SimpleStrategy', 'replication_factor':1};

@@ -2,9 +2,9 @@
 
 <komponent name="Careamount" package="careamount">
 
-    <resources path="careamount">
+    <resources>
         <resource name="Careamount"
-                  path=""
+                  path="careamount"
                   service="CareamountService">
             <dto name="Careamount" entity="Careamount"/>
             <method type="GET"
@@ -39,7 +39,8 @@
 
     <datacatalog>
         <entity name="Careamount">
-            <field name="Number" type="String" key="true"/>
+            <field name="Id" type="String" key="true"/>
+            <field name="Number" type="String"/>
             <field name="Month" type="Integer"/>
             <field name="Year" type="Integer"/>
             <field name="Total" type="BigDecimal"/>
@@ -47,13 +48,14 @@
             <field name="Difference" type="BigDecimal"/>
         </entity>
         <entity name="Monthvalue">
-            <field name="Number" type="String" key="true"/>
+            <field name="Id" type="String" key="true"/>
+            <field name="Number" type="String"/>
             <field name="Month" type="Integer"/>
             <field name="Year" type="Integer"/>
             <field name="Hour" type="BigDecimal"/>
             <field name="Difference" type="BigDecimal"/>
             <field name="Grosssalery" type="BigDecimal"/>
-            <field name="Createdon" type="Date"/>
+            <field name="Createdon" type="String"/>
         </entity>
     </datacatalog>
 </komponent>

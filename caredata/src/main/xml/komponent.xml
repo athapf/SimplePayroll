@@ -2,9 +2,9 @@
 
 <komponent name="Caredata" package="caredata">
 
-    <resources path="caredata">
+    <resources>
         <resource name="Caredata"
-                  path=""
+                  path="caredata"
                   service="CaredataService">
             <dto name="Caredata" entity="Caredata"/>
             <method type="GET"
@@ -92,7 +92,7 @@
             <field name="Id" type="String" key="true"/>
             <field name="Month" type="Integer"/>
             <field name="Year" type="Integer"/>
-            <field name="Createdon" type="Date"/>
+            <field name="Createdon" type="String"/>
         </entity>
     </datacatalog>
 </komponent>

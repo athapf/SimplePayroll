@@ -2,9 +2,9 @@
 
 <komponent name="Carereport" package="carereport">
 
-    <resources path="carereport">
+    <resources>
         <resource name="Carereport"
-                  path=""
+                  path="carereport"
                   service="CarereportService">
             <dto name="Carereport" entity="Carereport"/>
             <method type="GET"
@@ -45,7 +45,7 @@
             <field name="Year" type="Integer"/>
             <field name="Careamount" type="BigDecimal"/>
             <field name="Difference" type="BigDecimal"/>
-            <field name="Createdon" type="Date"/>
+            <field name="Createdon" type="String"/>
         </entity>
     </datacatalog>
 </komponent>
