@@ -12,9 +12,15 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
     private static final Logger LOGGER = Logger.getLogger(EmployeeServiceImpl.class);
 
+    @Inject
+    private EmployeeDao employeeDao;
+
+    @Inject
+    private EmployeeProducer employeeProducer;
+
     @Override
     public List<Employee> findAllEmployee() {
-        return null;
+        return employeeDao.findAllEmployee();
     }
 
     @Override
@@ -24,11 +30,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void createEmployee(final Employee content) {
+        LOGGER.info("createEmployee: " + content.toString());
 
+        employeeDao.insertEmployee(content);
+        employeeProducer.sendEmployee(content.getNumber(), content);
     }
 
     @Override
     public Employee findEmplyeeByNumber(final String Number) {
-        return null;
+        return employeeDao.findEmployeeById(Number);
     }
 }
