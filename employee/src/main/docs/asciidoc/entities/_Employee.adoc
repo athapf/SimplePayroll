@@ -47,7 +47,7 @@ WageRate:: [type]#BigDecimal# [sql]#decimal(5,4)#
 
   Stundenlohn
 
-[plantuml, beispiel2, svg]
+[plantuml, .beispiel2, svg]
 ----
 @startuml
 
