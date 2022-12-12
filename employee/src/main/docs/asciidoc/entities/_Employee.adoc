@@ -46,3 +46,19 @@ WeeklyHours:: [type]#BigDecimal# [sql]#decimal(2,2)#
 WageRate:: [type]#BigDecimal# [sql]#decimal(5,4)#
 
   Stundenlohn
+
+[plantuml, beispiel2, svg]
+----
+@startuml
+
+start
+
+repeat
+  :read data;
+  :generate diagrams;
+repeat while (more data?)
+
+stop
+
+@enduml
+----

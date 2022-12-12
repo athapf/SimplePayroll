@@ -6,3 +6,22 @@
 Mitarbeiter verwalten
 
 include::entities/_Employee.adoc[leveloffset=0]
+
+[plantuml, beispiel1, format="svg"]
+----
+@startuml
+
+start
+
+if (Graphviz installed?) then (yes)
+  :process all\ndiagrams;
+else (no)
+  :process only
+  __sequence__ and __activity__ diagrams;
+endif
+
+stop
+
+@enduml
+----
+
