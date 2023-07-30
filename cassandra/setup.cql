@@ -1,7 +1,8 @@
 
 CREATE TABLE IF NOT EXISTS
 careamount.careamount(
-    number text PRIMARY KEY, 
+    id text PRIMARY KEY, 
+    number text, 
     month int, 
     year int, 
     total decimal, 
