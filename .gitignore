@@ -1,4 +1,3 @@
-/images/
 
 # Eclipse
 .project
@@ -7,7 +6,7 @@
 bin/
 
 # IntelliJ
-.idea
+.idea/
 *.ipr
 *.iml
 *.iws
@@ -16,7 +15,7 @@ bin/
 nb-configuration.xml
 
 # Visual Studio Code
-.vscode
+.vscode/
 
 # OSX
 .DS_Store
@@ -36,6 +35,13 @@ pom.xml.releaseBackup
 pom.xml.versionsBackup
 release.properties
 
+# asciidoc
+**/.asciidoctor/images/*
+**/.asciidoctor/diagram/*
+**/asciidoc/**/*.png
+**/asciidoc/**/*.svg
+
 # additional
 *~
-.direnv
+.direnv/
+images/

@@ -36,6 +36,18 @@ services:
     networks:
       - payroll-network
 
+#  akhq:
+#    image: xx
+#    depends_on:
+#      - kafka
+#    ports:
+#      - "9070:8080"
+#    restart: always
+#    environment:
+#      LOG: "kk"
+#    networks:
+#      - payroll-network
+
   employee:
     image: thaso-example/employee:1.0
     build:
