@@ -9,21 +9,31 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <properties>
-        <java.version>11</java.version>
-        <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
         <quarkus.platform.version>2.11.2.Final</quarkus.platform.version>
         <cassandra.quarkus.version>1.1.2</cassandra.quarkus.version>
         <datastax.driver.version>4.14.0</datastax.driver.version>
         <mapstruct.version>1.5.2.Final</mapstruct.version>
+
+        <junit-jupiter.version>5.8.2</junit-jupiter.version>
+        <hamcrest-library.version>2.2</hamcrest-library.version>
+        <mockito-junit-jupiter.version>4.6.1</mockito-junit-jupiter.version>
+        <weld-core.version>2.4.1.Final</weld-core.version>
+        <weld-junit5.version>2.0.2.Final</weld-junit5.version>
+
+        <java.version>11</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven-failsafe-plugin.version>3.0.0</maven-failsafe-plugin.version>
+        <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
+        <maven-dependency-plugin.version>3.4.0</maven-dependency-plugin.version>
         <asciidoctor.maven.plugin.version>1.6.0</asciidoctor.maven.plugin.version>
         <asciidoctorj.version>1.6.2</asciidoctorj.version>
         <asciidoctorj.diagram.version>1.5.18</asciidoctorj.diagram.version>
         <jruby.version>9.2.9.0</jruby.version>
+
         <generate-excludes></generate-excludes>
     </properties>
 
@@ -31,13 +41,13 @@
         <module>generate</module>
         <module>employee</module>
         <module>worktime</module>
-        <module>monthvalue</module>
-        <module>payroll</module>
-        <module>careamount</module>
-        <module>caredata</module>
-        <module>carereport</module>
-        <module>transferdata</module>
-        <module>maintenance</module>
+        <!--<module>monthvalue</module>-->
+        <!--<module>payroll</module>-->
+        <!--<module>careamount</module>-->
+        <!--<module>caredata</module>-->
+        <!--<module>carereport</module>-->
+        <!--<module>transferdata</module>-->
+        <!--<module>maintenance</module>-->
     </modules>
 
     <dependencyManagement>
@@ -64,6 +74,39 @@
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <version>${hamcrest-library.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockito-junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.weld.se</groupId>
+            <artifactId>weld-se-core</artifactId>
+            <version>${weld-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.weld</groupId>
+            <artifactId>weld-junit5</artifactId>
+            <version>${weld-junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -80,7 +123,7 @@
                             </goals>
                             <configuration>
                                 <sources>
-                                    <source>${project.build.directory}/generated-sources/xml</source>
+                                    <source>${project.build.directory}/generated-sources/src</source>
                                 </sources>
                             </configuration>
                         </execution>
@@ -148,7 +191,7 @@
                                 <parameters>
                                     <parameter>
                                         <name>OutputBaseDirectory</name>
-                                        <value>${project.build.directory}/generated-sources/xml</value>
+                                        <value>${project.build.directory}/generated-sources/src</value>
                                     </parameter>
                                     <parameter>
                                         <name>KomponentPath</name>
@@ -159,7 +202,7 @@
                                         <value>${generate-excludes}</value>
                                     </parameter>
                                 </parameters>
-                                <outputDir>${project.build.directory}/generated-sources/xml</outputDir>
+                                <outputDir>${project.build.directory}/generated-sources/src</outputDir>
                                 <fileMappers>
                                     <fileMapper
                                             implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper">
@@ -331,14 +374,74 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${surefire-plugin.version}</version>
+                <version>${maven-surefire-plugin.version}</version>
                 <configuration>
+                    <skip>${skipUnitTests}</skip>
                     <systemPropertyVariables>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <maven.home>${maven.home}</maven.home>
                     </systemPropertyVariables>
+                    <excludes>
+                        <exclude>**/*DAOTest.java</exclude>
+                        <exclude>**/*IT.java</exclude>
+                    </excludes>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/Test*.java</include>
+                        <include>**/*MT.java</include>
+                    </includes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven-failsafe-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>failsafe-integration-tests</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>failsafe-verify</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <skip>${skipITs}</skip>
+                    <excludes>
+                        <exclude>**/*MT.java</exclude>
+                        <exclude>**/*Test.java</exclude>
+                        <exclude>**/Test*.java</exclude>
+                    </excludes>
+                    <includes>
+                        <include>**/*DAOTest.java</include>
+                        <include>**/*IT.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${maven-dependency-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>dependency-tree</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>tree</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>${project.build.directory}/dependency.txt</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
