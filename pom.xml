@@ -21,6 +21,10 @@
         <mockito-junit-jupiter.version>4.6.1</mockito-junit-jupiter.version>
         <weld-core.version>2.4.1.Final</weld-core.version>
         <weld-junit5.version>2.0.2.Final</weld-junit5.version>
+        <skipPactPublish>true</skipPactPublish>
+        <skipPactTests>true</skipPactTests>
+        <pact.consumer.version>4.6.3</pact.consumer.version>
+        <pact.provider.version>4.6.3</pact.provider.version>
 
         <java.version>11</java.version>
         <maven.compiler.source>17</maven.compiler.source>
@@ -105,6 +109,21 @@
             <version>${weld-junit5.version}</version>
             <scope>test</scope>
         </dependency>
+
+      <dependency>
+        <groupId>au.com.dius.pact.consumer</groupId>
+        <artifactId>junit5</artifactId>
+        <version>${pact.consumer.version}</version>
+        <scope>test</scope>
+      </dependency>
+<!--
+      <dependency>
+        <groupId>au.com.dius.pact.provider</groupId>
+        <artifactId>junit5</artifactId>
+        <version>${pact.provider.version}</version>
+        <scope>test</scope>
+      </dependency>
+-->
     </dependencies>
 
     <build>
@@ -382,6 +401,11 @@
                     <systemPropertyVariables>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <maven.home>${maven.home}</maven.home>
+                      <pact.verify.publishResults>true</pact.verify.publishResults>
+                      <pact.provider.version>${project.version}</pact.provider.version>
+                      <pact.writer.overwrite>true</pact.writer.overwrite>
+                      <pactbroker.url>http://localhost:15292</pactbroker.url>
+                      <pact_do_not_track>true</pact_do_not_track>
                     </systemPropertyVariables>
                     <excludes>
                         <exclude>**/*DAOTest.java</exclude>
@@ -395,6 +419,7 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${maven-failsafe-plugin.version}</version>
                 <executions>
@@ -412,13 +437,43 @@
                             <goal>verify</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>failsafe-pact-tests</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${skipPactTests}</skip>
+                            <systemPropertyVariables>
+                                <org.jboss.logging.provider>jdk</org.jboss.logging.provider>
+                                <pact.verifier.publishResults>false</pact.verifier.publishResults>
+                                <pact.provider.version>${project.version}</pact.provider.version>
+                                <pactbroker.url>http://localhost:15292</pactbroker.url>
+                                <pact_do_not_track>true</pact_do_not_track>
+                            </systemPropertyVariables>
+                            <useSystemClassLoader>false</useSystemClassLoader>
+                            <excludes>
+                                <exclude>**/*MT.java</exclude>
+                                <exclude>**/*Test.java</exclude>
+                                <exclude>**/Test*.java</exclude>
+                                <exclude>**/*DAOTest.java</exclude>
+                                <exclude>**/*IT.java</exclude>
+                            </excludes>
+                            <includes>
+                                <include>**/*PactIT.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
                 </executions>
                 <configuration>
                     <skip>${skipITs}</skip>
+                    <useSystemClassLoader>true</useSystemClassLoader>
                     <excludes>
                         <exclude>**/*MT.java</exclude>
                         <exclude>**/*Test.java</exclude>
                         <exclude>**/Test*.java</exclude>
+                        <exclude>**/*PactIT.java</exclude>
                     </excludes>
                     <includes>
                         <include>**/*DAOTest.java</include>

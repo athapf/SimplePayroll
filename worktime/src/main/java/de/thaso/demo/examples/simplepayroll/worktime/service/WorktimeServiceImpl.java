@@ -20,12 +20,14 @@ public class WorktimeServiceImpl implements WorktimeService {
     }
 
     @Override
+
+
     public Worktime createWorktime(final Worktime content) {
         return null;
     }
 
     @Override
     public void consumeEmployee(final String key, final Employee payload) {
-
+        LOGGER.info("==> consume employee : " + key + ", " + payload.getNumber());
     }
 }
