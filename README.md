@@ -31,13 +31,13 @@ grep -h -v "CREATE KEYSPACE" ./*/target/generated-sources/cassandra/*.cql > cass
 ```
 
 ```
-docker cp cassandra/init.cql simplepayroll_database_1:/tmp/
+docker cp cassandra/init.cql cassandra:/tmp/
 sleep 1
-docker cp cassandra/setup.cql simplepayroll_database_1:/tmp/
+docker cp cassandra/setup.cql cassandra:/tmp/
 sleep 1
-docker exec simplepayroll_database_1 cqlsh -f /tmp/init.cql
+docker exec cassandra cqlsh -f /tmp/init.cql
 sleep 3
-docker exec simplepayroll_database_1 cqlsh -f /tmp/setup.cql
+docker exec cassandra cqlsh -f /tmp/setup.cql
 ```
 
 # Examples

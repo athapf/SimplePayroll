@@ -3,6 +3,8 @@ version: '3.5'
 services:
   zookeeper:
     image: strimzi/kafka:0.20.1-kafka-2.6.0
+    hostname: zookeeper
+    container_name: zookeeper
     command: [
       "sh", "-c",
       "bin/zookeeper-server-start.sh config/zookeeper.properties"
@@ -17,6 +19,8 @@ services:
 
   kafka:
     image: strimzi/kafka:0.20.1-kafka-2.6.0
+    hostname: kafka
+    container_name: kafka
     command: [
       "sh", "-c",
       "bin/kafka-server-start.sh config/server.properties --override listeners=$${KAFKA_LISTENERS} --override advertised.listeners=$${KAFKA_ADVERTISED_LISTENERS} --override zookeeper.connect=$${KAFKA_ZOOKEEPER_CONNECT} --override num.partitions=$${KAFKA_NUM_PARTITIONS} --override group.min.session.timeout.ms=$${KAFKA_GROUP_MIN_SESSION_TIMEOUT_MS}"
@@ -50,6 +54,8 @@ services:
 
   employee:
     image: thaso-example/employee:1.0
+    hostname: employee
+    container_name: employee
     build:
       context: employee
       dockerfile: src/main/docker/Dockerfile.jvm
@@ -65,6 +71,8 @@ services:
 
   worktime:
     image: thaso-example/worktime:1.0
+    hostname: worktime
+    container_name: worktime
     build:
       context: worktime
       dockerfile: src/main/docker/Dockerfile.jvm

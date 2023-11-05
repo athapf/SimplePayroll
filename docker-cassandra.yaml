@@ -2,6 +2,8 @@ version: '3.5'
 
 services:
   database:
+    hostname: cassandra
+    container_name: cassandra
     image: cassandra:4
     ports:
       - "9042:9042"
