@@ -1,0 +1,32 @@
+
+[plantuml, diagramm72, format="svg" width="400"]
+----
+@startuml
+
+left to right direction
+
+interface "Topic In" as ti
+interface "Resource" as ri
+interface "Topic Out" as to
+interface "Call" as ro
+
+component "Verbund" <<microservice>> as v
+
+database "DB" as db
+
+ti -- v
+ri -- v
+v --( to
+v --( ro
+v - db
+
+note top of ti
+json JSON {
+   "fruit":"Apple",
+   "size":"Large",
+   "color": ["Red", "Green"]
+}
+end note
+
+@enduml
+----

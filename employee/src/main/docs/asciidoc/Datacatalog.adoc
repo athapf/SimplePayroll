@@ -1,5 +1,7 @@
 = Datenbeschreibung
 
+include::_Sample.adoc[leveloffset=0]
+
 [role="datacatalog"]
 == Datenkatalog
 
